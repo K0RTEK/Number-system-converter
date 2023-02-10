@@ -1,0 +1,72 @@
+from string import ascii_uppercase
+class Translate:
+    
+    def __init__(self,original,orig,result):
+        self.original=original
+        self.result=result
+        self.orig=orig
+
+    def binary(self):
+        res=''
+        res2=0
+        all_symbols=[i for i in range(10)]+[i for i in ascii_uppercase]
+        length=len(str(self.original))
+
+        if self.original==self.result:
+            return self.original
+
+        if self.original==0:
+            return 0
+        if self.orig>=10:
+            while self.original//self.result>0 or self.original//self.result<1:
+                res+=str(all_symbols[int(self.original%self.result)])
+                self.original//=self.result
+
+                if self.original/self.result>0 and self.original/self.result<1:
+                    res+=str(all_symbols[int(self.original%self.result)])
+
+                    if res[1][::-1]=='0':
+                        return res[0][::-1]
+                    else:
+                        return res[::-1]
+            if res[1][::-1]=='0':
+                return res[0][::-1]
+            else:
+                return res[::-1]
+
+        if self.orig<10:
+
+            for i in str(self.original):
+                res2+=int(i)*self.orig**(length-1)
+                length-=1
+            
+            while res2//self.result>0 or res2//self.result<1:
+                res+=str(all_symbols[int(res2%self.result)])
+                res2//=self.result
+
+                if res2/self.result>0 and res2/self.result<1:
+                    res+=str(all_symbols[int(res2%self.result)])
+
+                    if res[1][::-1]=='0':
+                        return res[0][::-1]
+                    else:
+                        return res[::-1]
+
+            if res[1][::-1]=='0':
+                return res[0][::-1]
+            else:
+                return res[::-1]
+    
+if __name__=="__main__":
+    def recall():
+        num=int(input("Введите число: "))
+        first=int(input("Введите систему счисления числа: "))
+        second=int(input("Введите систему счисления в которую хотите перевести число: "))
+        trans=Translate(num,first,second)
+        print(trans.binary())
+        repeat=int("Хотите повторить? Y/n: ")
+        if repeat=='Y' or repeat=='y':
+            return recall()
+        else:
+            return None
+    recall()
